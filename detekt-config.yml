@@ -1,0 +1,347 @@
+# ─────────────────────────────────────────────────────
+# detekt 静态分析配置 — 拉歌 (LaGe) KMP
+# ─────────────────────────────────────────────────────
+# 运行: ./gradlew detekt
+# 参考: https://detekt.dev/config
+
+build:
+  weights:
+    complexity: 2
+    formatting: 1
+    comments: 1
+    exceptions: 1
+    naming: 1
+    performance: 2
+    potential-bugs: 2
+    style: 1
+
+config:
+  # 禁止在 commonMain 中使用 JVM-only API
+  excludes:
+    - "**/androidMain/**"
+    - "**/iosMain/**"
+    - "**/jvmMain/**"
+
+processors:
+  active: true
+  exclude:
+    - "FunctionCountProcessor"
+    - "PropertyCountProcessor"
+    - "ClassCountProcessor"
+    - "PackageCountProcessor"
+    - "KtFileCountProcessor"
+
+console-reports:
+  active: true
+  exclude:
+    - "ProjectStatisticsReport"
+    - "ComplexityReport"
+    - "NotificationReport"
+    - "FindingsReport"
+    - "FileBasedInfoReport"
+
+output-reports:
+  active: true
+  exclude:
+    - "XmlOutputReport"
+    - "HtmlOutputReport"
+    - "TxtOutputReport"
+
+# ── 规则集 ─────────────────────────────────────────────
+
+comments:
+  active: true
+  CommentOverPrivateFunction:
+    active: false
+  CommentOverPrivateProperty:
+    active: false
+  EndOfSentenceFormat:
+    active: false
+  UndocumentedPublicClass:
+    active: true
+  UndocumentedPublicFunction:
+    active: false
+  UndocumentedPublicProperty:
+    active: false
+
+complexity:
+  active: true
+  ComplexCondition:
+    active: true
+    threshold: 4
+  LargeClass:
+    active: true
+    threshold: 300
+  LongMethod:
+    active: true
+    threshold: 40
+  LongParameterList:
+    active: true
+    threshold: 6
+  MethodOverloading:
+    active: false
+  NestedBlockDepth:
+    active: true
+    threshold: 4
+  StringLiteralDuplication:
+    active: true
+    threshold: 3
+  TooManyFunctions:
+    active: true
+    thresholdInFiles: 15
+    thresholdInClasses: 12
+
+coroutines:
+  active: true
+  GlobalCoroutineUsage:
+    active: true
+  RedundantSuspendModifier:
+    active: true
+  SleepInsteadOfDelay:
+    active: true
+  SuspendFunSwallowedCancellation:
+    active: true
+
+exceptions:
+  active: true
+  ExceptionRaisedInUnexpectedLocation:
+    active: true
+  NotImplementedDeclaration:
+    active: true
+  ThrowingExceptionFromFinally:
+    active: true
+  ThrowingExceptionsWithoutMessageOrCause:
+    active: true
+    exceptions:
+      - "IllegalArgumentException"
+      - "IllegalStateException"
+      - "IndexOutOfBoundsException"
+
+naming:
+  active: true
+  BooleanPropertyNaming:
+    active: false
+  ClassNaming:
+    active: true
+    pattern: '[A-Z][a-zA-Z0-9]*'
+  ConstructorParameterNaming:
+    active: true
+    pattern: '[a-z][a-zA-Z0-9]*'
+  EnumNaming:
+    active: true
+    pattern: '[A-Z][a-zA-Z0-9]*'
+  FunctionNaming:
+    active: true
+    pattern: '[a-z][a-zA-Z0-9]*'
+  FunctionParameterNaming:
+    active: true
+    pattern: '[a-z][a-zA-Z0-9]*'
+  ObjectPropertyNaming:
+    active: true
+    pattern: '[a-z][a-zA-Z0-9]*'
+  TopLevelPropertyNaming:
+    active: true
+    pattern: '[A-Z][a-zA-Z0-9]*'
+  VariableNaming:
+    active: true
+    pattern: '[a-z][a-zA-Z0-9]*'
+
+performance:
+  active: true
+  ArrayPrimitive:
+    active: true
+  CouldBeSequence:
+    active: true
+    threshold: 5
+  ForEachOnRange:
+    active: true
+  SpreadOperator:
+    active: true
+  UnnecessaryTemporaryInstantiation:
+    active: true
+
+potential-bugs:
+  active: true
+  CastNullableToNonNullableType:
+    active: true
+  Deprecation:
+    active: true
+  DontDowncastCollectionToCollection:
+    active: true
+  DoubleMutabilityForCollection:
+    active: true
+  ElseCaseInsteadOfExhaustiveWhen:
+    active: false
+  EqualsAlwaysReturnsTrueOrFalse:
+    active: true
+  EqualsWithHashCodeImport:
+    active: true
+  ExitOutsideApplication:
+    active: true
+  IgnoredReturnValue:
+    active: true
+  ImplicitDefaultLocale:
+    active: false
+  InvalidImport:
+    active: true
+  LateinitUsage:
+    active: false
+  MapGetWithNotNullAssertionOperator:
+    active: true
+  MissingPackageDeclaration:
+    active: true
+  NullCheckOnMutableProperty:
+    active: true
+  UnconditionalJumpStatementInLoop:
+    active: true
+  UnnecessaryNotNullCheck:
+    active: true
+  UnnecessaryNotNullOperator:
+    active: true
+  UnnecessaryOptional:
+    active: true
+  UnreachableCatchBlock:
+    active: true
+  UnreachableCode:
+    active: true
+  UnsafeCallOnNullableType:
+    active: true
+  UnsafeCast:
+    active: true
+  UnusedUnaryOperator:
+    active: true
+  UselessPostfixExpression:
+    active: true
+
+style:
+  active: true
+  CanBeNonNullable:
+    active: true
+  CollapsibleIfStatements:
+    active: true
+  DataClassContainsFunctions:
+    active: false
+  DataClassShouldBeImmutable:
+    active: false
+  EqualsNullCall:
+    active: true
+  ExpressionBodySyntax:
+    active: true
+  ForbiddenComment:
+    active: true
+    values:
+      - "FIXME:"
+      - "STOPSHIP:"
+      - "TODO:"
+  ForbiddenImport:
+    active: true
+    imports:
+      - "java.util.Date"
+      - "java.text.SimpleDateFormat"
+      - "sun.misc.Unsafe"
+  FunctionOnlyReturningConstant:
+    active: true
+  MagicNumber:
+    active: true
+    ignoreNumbers:
+      - -1
+      - 0
+      - 1
+      - 2
+      - 4
+      - 8
+      - 10
+      - 16
+      - 20
+      - 24
+      - 30
+      - 50
+      - 60
+      - 72
+      - 100
+      - 500
+      - 1000
+      - 1024
+      - 30000
+    ignoreHashCodeFunction: true
+    ignorePropertyDeclaration: true
+    ignoreConstantDeclaration: true
+    ignoreCompanionObjectPropertyDeclaration: true
+    ignoreAnnotation: true
+  MandatoryBracesIfLoops:
+    active: true
+  MaxLineLength:
+    active: true
+    maxLineLength: 140
+    excludePackageStatements: true
+    excludeImportStatements: true
+    excludeCommentStatements: false
+  MayBeConst:
+    active: true
+  ModifierOrder:
+    active: true
+  NestedClassesVisibility:
+    active: true
+  NewLineAtEndOfFile:
+    active: true
+  NoTabs:
+    active: false
+  OptionalAbstractKeyword:
+    active: true
+  OptionalUnit:
+    active: true
+  PreferToOverPairSyntax:
+    active: true
+  ProtectedMemberInFinalClass:
+    active: true
+  RedundantExplicitType:
+    active: true
+  RedundantVisibilityModifierRule:
+    active: true
+  ReturnCount:
+    active: true
+    max: 3
+    excludeGuardClauses: true
+  SafeCast:
+    active: true
+  SerialVersionUIDInSerializableClass:
+    active: true
+  SpacingBetweenPackageAndImports:
+    active: true
+  ThrowsCount:
+    active: true
+    max: 3
+  TrailingComma:
+    active: false
+  UnnecessaryAnnotationUseSiteTarget:
+    active: true
+  UnnecessaryFilter:
+    active: true
+  UnnecessaryInheritance:
+    active: true
+  UnnecessaryLet:
+    active: true
+  UnnecessaryParentheses:
+    active: true
+  UnusedImports:
+    active: true
+  UnusedPrivateClass:
+    active: true
+  UnusedPrivateMember:
+    active: true
+  UseCheckOrError:
+    active: true
+  UseDataClass:
+    active: true
+  UseRequire:
+    active: true
+  UselessCallOnNotNull:
+    active: true
+  VarCouldBeVal:
+    active: true
+  WildcardImport:
+    active: true
+    excludeImports:
+      - "io.ktor.client.call.*"
+      - "io.ktor.client.request.*"
+      - "io.ktor.http.*"
