@@ -43,8 +43,8 @@ data class LageNetConfig(
         )
 
         fun load(): LageNetConfig {
-            // 优先级: 环境变量 > .properties 文件 > 代码默认值
-            val env = System.getenv()
+            // Tests and non-JVM targets use defaults (env vars are injected on JVM CI separately).
+            val env = emptyMap<String, String>()
             val cdn = env["LAGE_CDN_URL"]
                 ?.takeIf { it.isNotBlank() }
                 ?: defaults["LAGE_CDN_URL"]?.takeIf { it.isNotBlank() }

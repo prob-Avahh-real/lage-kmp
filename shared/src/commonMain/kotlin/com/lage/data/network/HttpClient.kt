@@ -50,7 +50,6 @@ object LageHttpClient {
         install(ContentNegotiation) { json(json) }
 
         install(ContentEncoding) {
-            brotli()
             gzip()
             deflate()
         }
@@ -92,7 +91,7 @@ object LageHttpClient {
 class ResponseCache<T>(
     private val ttl: kotlin.time.Duration = 30.seconds
 ) {
-    private data class Entry<T>(
+    internal data class Entry<T>(
         val data: T,
         val timestamp: Long = Clock.System.now().toEpochMilliseconds()
     ) {
